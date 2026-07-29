@@ -1,0 +1,441 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   skin_egc — course wiki for Evolución y Gestión de la Configuración.
+   Crimson and charcoal from the subject's logo, a dark terminal header and
+   editor-styled code blocks. It replaces a BookStack install, so it reads as
+   documentation: long measure, generous leading, a clear heading hierarchy
+   and no marketing gloss.
+
+   Colour comes from the theme's --brand-* tokens (set in __init__), so this
+   file only says what the tokens cannot: the terminal chrome, the code block
+   and the reading measure. Loaded at asset order 200, after the theme's base
+   public.css, so these rules win.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+    color-scheme: light dark;
+
+    /* Terminal chrome. Dark in both schemes, which is what makes the header
+       read as a shell prompt rather than as a light bar that went dark. */
+    --egc-terminal: #1c1f24;
+    --egc-terminal-text: #d5d9df;
+    --egc-terminal-muted: #939aa5;
+    --egc-code-bg: #16181d;
+
+    /* Crimson that stays legible on a near-black surface. The brand crimson
+       is a fill colour; this one is for text and hairlines over the terminal. */
+    --egc-crimson-bright: #c23b57;
+
+    /* Link colour, kept apart from the app colour the way the wiki this
+       replaces kept them apart: one paints, the other is read. */
+    --egc-link: var(--brand-primary);
+
+    /* Line length for prose. Lab scripts are read end to end, not skimmed. */
+    --egc-measure: 72ch;
+
+    /* No mono token exists, and the display face already is one. */
+    --egc-font-mono: var(--brand-font-display);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --brand-bg: #14161a;
+        --brand-surface: #1c1f24;
+        --brand-text: #d3d6dc;
+        --brand-heading: #f3f4f6;
+        --brand-muted: #9096a1;
+        --brand-border: #2b2f36;
+        /* Charcoal is a reading colour on paper and an invisible one here,
+           so the quiet half of the identity inverts with everything else. */
+        --brand-accent: #adb3bd;
+        /* App colour and link colour of the dark palette. */
+        --brand-primary: #c23b57;
+        --egc-link: #e8798f;
+    }
+}
+
+/* ── Reading surface ────────────────────────────────────────────────────── */
+body.cms-public {
+    line-height: 1.72;
+    text-rendering: optimizeLegibility;
+}
+
+.cms-public h1,
+.cms-public h2,
+.cms-public h3,
+.cms-public h4 {
+    font-weight: 600;
+    letter-spacing: -.01em;
+}
+
+.cms-public a { color: var(--egc-link); }
+
+.cms-public ::selection {
+    background: color-mix(in srgb, var(--brand-primary) 20%, transparent);
+}
+
+.cms-public a:focus-visible,
+.cms-public button:focus-visible,
+.cms-public .btn:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ── Header: a terminal with a crimson edge ─────────────────────────────── */
+.cms-public .site-header {
+    background: var(--egc-terminal);
+    border-bottom: 3px solid var(--brand-primary);
+    backdrop-filter: none;
+}
+.cms-public .site-header__inner { min-height: 60px; }
+
+.cms-public .site-brand {
+    font-family: var(--brand-font-display);
+    font-weight: 500;
+    font-size: 1.05rem;
+    letter-spacing: -.01em;
+    color: #f3f4f6;
+}
+/* The prompt. Decorative, and the only place the site name is not plain. */
+.cms-public .site-brand__name::before {
+    content: "~/";
+    margin-right: .12em;
+    color: var(--egc-crimson-bright);
+}
+
+.cms-public .site-nav a {
+    color: var(--egc-terminal-text);
+    font-family: var(--brand-font-display);
+    font-size: .88rem;
+    font-weight: 400;
+}
+.cms-public .site-nav a:hover { color: #ffffff; }
+.cms-public .site-header .site-nav a.is-active {
+    color: #ffffff;
+    font-weight: 500;
+    box-shadow: inset 0 -2px 0 var(--egc-crimson-bright);
+}
+
+.cms-public .lang-switch__opt { color: var(--egc-terminal-muted); }
+.cms-public .lang-switch__opt.is-active {
+    color: #ffffff;
+    background: color-mix(in srgb, var(--egc-crimson-bright) 32%, transparent);
+}
+
+@media (max-width: 820px) {
+    /* The theme's mobile panel inherits the page background, which would be
+       white text on white below a dark header. */
+    .cms-public .site-nav {
+        background: var(--egc-terminal);
+        border-bottom: 1px solid rgba(255, 255, 255, .10);
+        box-shadow: 0 16px 28px rgba(0, 0, 0, .35);
+    }
+    .cms-public .site-nav-toggle { border-color: rgba(255, 255, 255, .20); }
+    .cms-public .site-nav-toggle span { background: var(--egc-terminal-text); }
+}
+
+/* ── Hero: an index page, not a landing page ────────────────────────────── */
+.cms-public .block-hero {
+    padding-block: 3.25rem 2.75rem;
+    text-align: left;
+    background: var(--brand-surface);
+    border-bottom: 1px solid var(--brand-border);
+}
+.cms-public .hero-eyebrow {
+    font-family: var(--egc-font-mono);
+    font-size: .74rem;
+    font-weight: 500;
+    letter-spacing: .14em;
+    color: var(--brand-accent);
+    margin: 0 0 .6rem;
+}
+.cms-public .hero-title {
+    font-family: var(--brand-font-heading);
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.15;
+}
+.cms-public .hero-subtitle {
+    margin: .9rem 0 1.6rem;
+    max-width: var(--egc-measure);
+    font-size: 1.05rem;
+}
+.cms-public .hero-actions { justify-content: flex-start; }
+
+/* ── Documentation typography ───────────────────────────────────────────────
+   Scoped to elements the renderer emits without a class, so component markup
+   (cards, hero, banners) keeps its own sizing. ─────────────────────────── */
+.cms-public .site-main h1:not([class]) {
+    font-size: clamp(1.85rem, 3.4vw, 2.3rem);
+    line-height: 1.2;
+    /* A page title sits directly under the header on most wiki pages, so it
+       carries its own breathing room rather than relying on the template. */
+    margin: 2rem 0 .9rem;
+}
+.cms-public .site-main h2:not([class]) {
+    font-size: 1.45rem;
+    max-width: var(--egc-measure);
+    margin: 2.6rem 0 1rem;
+    padding-bottom: .35rem;
+    border-bottom: 1px solid var(--brand-border);
+}
+.cms-public .site-main h3:not([class]) {
+    font-size: 1.18rem;
+    margin: 2rem 0 .7rem;
+}
+.cms-public .site-main h4:not([class]) {
+    font-size: 1rem;
+    margin: 1.6rem 0 .5rem;
+    color: var(--brand-text);
+}
+
+.cms-public .site-main p:not([class]) {
+    max-width: var(--egc-measure);
+    margin: 0 0 1.15rem;
+    line-height: 1.78;
+}
+.cms-public .site-main :is(ul, ol):not([class]) {
+    max-width: var(--egc-measure);
+    margin: 0 0 1.15rem;
+    padding-left: 1.4rem;
+}
+.cms-public .site-main li:not([class]) { margin-block: .35rem; }
+.cms-public .site-main li:not([class]) > :is(ul, ol) { margin-block: .35rem; }
+
+.cms-public .site-main blockquote:not([class]) {
+    max-width: var(--egc-measure);
+    margin: 1.6rem 0;
+    padding: .2rem 0 .2rem 1.1rem;
+    border-left: 3px solid color-mix(in srgb, var(--brand-primary) 40%, var(--brand-border));
+    color: var(--brand-muted);
+}
+
+.cms-public .site-main hr:not([class]) {
+    height: 0;
+    border: 0;
+    border-top: 1px solid var(--brand-border);
+    margin: 2.5rem 0;
+}
+
+/* Underline prose links only. Buttons and card links are not prose. */
+.cms-public .site-main :is(p, li, blockquote, td) a:not(.btn) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .18em;
+    text-decoration-color: color-mix(in srgb, var(--egc-link) 40%, transparent);
+}
+.cms-public .site-main :is(p, li, blockquote, td) a:not(.btn):hover {
+    text-decoration-color: currentColor;
+}
+
+.cms-public .site-main img:not([class]) {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--brand-border);
+    border-radius: var(--brand-radius);
+}
+
+/* ── Tables ─────────────────────────────────────────────────────────────── */
+.cms-public .site-main table:not([class]) {
+    width: 100%;
+    margin: 1.6rem 0;
+    border-collapse: collapse;
+    font-size: .94rem;
+}
+.cms-public .site-main table:not([class]) :is(th, td) {
+    border: 1px solid var(--brand-border);
+    padding: .5rem .7rem;
+    text-align: left;
+    vertical-align: top;
+}
+.cms-public .site-main table:not([class]) th {
+    background: var(--brand-surface);
+    color: var(--brand-heading);
+    font-weight: 600;
+}
+@media (max-width: 640px) {
+    /* Wide reference tables scroll instead of stretching the page. */
+    .cms-public .site-main table:not([class]) {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* ── Code: an editor pane, not a grey box ───────────────────────────────── */
+.cms-public .site-main pre {
+    max-width: 100%;
+    margin: 1.6rem 0;
+    padding: 1rem 1.15rem;
+    background: var(--egc-code-bg);
+    color: #e3e6eb;
+    border: 1px solid #0e1014;
+    border-left: 3px solid var(--egc-crimson-bright);
+    border-radius: 0 var(--brand-radius) var(--brand-radius) 0;
+    overflow-x: auto;
+    font-family: var(--egc-font-mono);
+    font-size: .875rem;
+    line-height: 1.62;
+    tab-size: 4;
+}
+.cms-public .site-main pre code {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+}
+.cms-public .site-main :not(pre) > code {
+    font-family: var(--egc-font-mono);
+    font-size: .875em;
+    color: var(--egc-link);
+    background: color-mix(in srgb, var(--brand-primary) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--brand-primary) 16%, transparent);
+    border-radius: 3px;
+    padding: .08em .32em;
+    overflow-wrap: break-word;
+}
+
+/* ── Course cards ───────────────────────────────────────────────────────── */
+.cms-public .card {
+    background: var(--brand-bg);
+    border: 1px solid var(--brand-border);
+    box-shadow: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+.cms-public .card:hover {
+    /* The theme lifts the card. A wiki someone reads every week does not. */
+    transform: none;
+    border-color: color-mix(in srgb, var(--brand-primary) 45%, var(--brand-border));
+    box-shadow: 0 2px 10px color-mix(in srgb, var(--brand-heading) 8%, transparent);
+}
+.cms-public .card__title {
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: var(--brand-heading);
+    transition: color .15s ease;
+}
+.cms-public .card:hover .card__title { color: var(--egc-link); }
+.cms-public .card__meta {
+    font-family: var(--egc-font-mono);
+    font-size: .78rem;
+}
+/* A card wrapped in, or holding, a link still reads as a card. */
+.cms-public a .card,
+.cms-public .card a:not(.btn) {
+    color: var(--brand-text);
+    text-decoration: none;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.cms-public .btn {
+    padding: .6rem 1.15rem;
+    font-weight: 500;
+    letter-spacing: .01em;
+}
+.cms-public .btn:hover { transform: none; }
+.cms-public .btn-primary {
+    background: var(--brand-primary);
+    color: var(--brand-primary-contrast);
+    border-color: var(--brand-primary);
+    box-shadow: none;
+}
+/* Mixing towards the heading colour darkens the crimson in the light palette
+   and lightens it in the dark one, so one rule covers both. */
+.cms-public .btn-primary:hover {
+    background: color-mix(in srgb, var(--brand-primary) 86%, var(--brand-heading));
+    border-color: color-mix(in srgb, var(--brand-primary) 86%, var(--brand-heading));
+}
+.cms-public .btn-ghost {
+    background: transparent;
+    color: var(--egc-link);
+    border-color: var(--brand-border);
+}
+.cms-public .btn-ghost:hover {
+    color: var(--egc-link);
+    border-color: var(--brand-primary);
+    background: color-mix(in srgb, var(--brand-primary) 7%, transparent);
+}
+
+/* ── Badges and section titles ──────────────────────────────────────────── */
+.cms-public .badge {
+    background: color-mix(in srgb, var(--brand-primary) 10%, transparent);
+    color: var(--egc-link);
+    border: 1px solid color-mix(in srgb, var(--brand-primary) 26%, transparent);
+    border-radius: 4px;
+    font-family: var(--egc-font-mono);
+    font-size: .72rem;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: .01em;
+    padding: .1rem .45rem;
+}
+
+.cms-public .section-title {
+    position: relative;
+    font-size: 1.35rem;
+    margin: 2.75rem 0 1.25rem;
+    padding-bottom: .55rem;
+    border-bottom: 1px solid var(--brand-border);
+}
+.cms-public .section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 44px;
+    height: 2px;
+    background: var(--brand-primary);
+}
+
+/* ── Footer: the other end of the terminal ──────────────────────────────── */
+.cms-public .site-footer {
+    background: var(--egc-terminal);
+    border-top: 3px solid var(--brand-primary);
+    color: var(--egc-terminal-text);
+}
+.cms-public .site-footer__name { color: #f3f4f6; }
+.cms-public .site-footer__tagline { color: var(--egc-terminal-muted); }
+.cms-public .site-social a { color: var(--egc-terminal-text); font-weight: 500; }
+.cms-public .site-social a:hover { color: var(--egc-crimson-bright); }
+.cms-public .site-footer__legal { color: var(--egc-terminal-muted); }
+.cms-public .site-footer__madewith a { color: var(--egc-terminal-text); }
+.cms-public .site-footer__madewith a:hover { color: var(--egc-crimson-bright); }
+
+/* ── Dark palette adjustments the tokens cannot express ─────────────────── */
+@media (prefers-color-scheme: dark) {
+    .cms-public .card { background: var(--brand-surface); }
+    .cms-public .card:hover { box-shadow: 0 2px 12px rgba(0, 0, 0, .45); }
+    /* The editor pane is nearly the page colour here, so it needs an outline
+       to stay a pane. The crimson edge is restated because border-color
+       would otherwise paint over it. */
+    .cms-public .site-main pre {
+        border-color: #2f333b;
+        border-left-color: var(--egc-crimson-bright);
+    }
+}
+
+/* ── Motion ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .cms-public *,
+    .cms-public *::before,
+    .cms-public *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+    }
+}
+
+/* ── Print: lab material ends up on paper ───────────────────────────────── */
+@media print {
+    .cms-public .site-header,
+    .cms-public .site-footer,
+    .cms-public .site-nav { display: none; }
+    .cms-public .site-main p:not([class]),
+    .cms-public .site-main :is(ul, ol):not([class]) { max-width: none; }
+    .cms-public .site-main pre {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #999999;
+        border-left: 3px solid #9b1130;
+    }
+}

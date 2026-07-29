@@ -1,0 +1,9 @@
+# Source and compiled frontend assets. The skin IS its stylesheet, so the
+# whole assets tree ships, not only assets/dist.
+recursive-include src/splent_io/splent_feature_skin_egc/assets *.js *.css *.map
+
+# Jinja templates (feature views + hook fragments)
+recursive-include src/splent_io/splent_feature_skin_egc/templates *.html
+
+# Alembic migration config and scripts
+recursive-include src/splent_io/splent_feature_skin_egc/migrations *.py *.ini *.mako

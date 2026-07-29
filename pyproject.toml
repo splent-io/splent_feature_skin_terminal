@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "splent_feature_skin_egc"
-version = "0.0.1"
+version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.13"
 
@@ -23,23 +23,33 @@ exclude = ["*.tests", "*.tests.*"]
 [tool.splent]
 cli_version = "1.15.0"
 
+# ── Feature Contract (auto-generated) ────────────────────────────────────────
+# Do not edit manually — re-run `splent feature:contract --write` to refresh.
+# Preserved across refreshes: description, category, tags, env, and
+# requires.features_manual (dependencies invisible to static analysis).
 [tool.splent.contract]
 description = "EGC course wiki look (design tokens + skin.css)"
 archetype = "config"
 
 [tool.splent.contract.provides]
-routes = []
+routes     = []
 blueprints = []
-models = []
-commands = []
+models     = []
+commands   = []
+hooks      = []
+services   = []
+signals    = []
+translations = []
+docker     = []
 
 [tool.splent.contract.requires]
-features = []
+features = ["theme"]
 env_vars = []
+signals  = []
 
 [tool.splent.contract.extensible]
-services = []
+services  = []
 templates = []
-models = []
-hooks = []
-routes = false
+models    = []
+hooks     = []
+routes    = false

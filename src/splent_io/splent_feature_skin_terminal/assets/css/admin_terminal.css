@@ -23,13 +23,16 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 :root {
-    /* The chrome: the same near-black terminal the public header uses,
-       rather than the slate this shell ships with. */
-    --s-sidebar-bg: var(--egc-terminal);
-    --s-sidebar-text: var(--egc-terminal-muted);
-    --s-sidebar-text-active: #ffffff;
-    --s-sidebar-active: color-mix(in srgb, var(--brand-primary) 26%, transparent);
-    --s-sidebar-hover: color-mix(in srgb, #ffffff 6%, transparent);
+    /* The sidebar is white, on purpose. A dark rail beside pages of white
+       forms and tables split the panel into two competing halves and hid
+       whatever own.css had hardcoded for light-on-dark. White with dark
+       text keeps the whole panel one surface, and the crimson is spent
+       where it means something: the active item and the buttons. */
+    --s-sidebar-bg: #ffffff;
+    --s-sidebar-text: var(--brand-text);
+    --s-sidebar-text-active: var(--brand-heading);
+    --s-sidebar-active: color-mix(in srgb, var(--brand-primary) 10%, transparent);
+    --s-sidebar-hover: var(--brand-surface);
 
     /* The app colour. Indigo is what the shell ships with and it is the one
        thing on the page that says "this is a different site". */
@@ -89,14 +92,35 @@
 
 /* The "~/" that marks the site name as a shell prompt on the public header,
    so the two brands read as one. Written here because the markup belongs to
-   the admin feature. */
+   the admin feature. On white the bright terminal crimson washes out, so
+   the prompt uses the brand crimson. */
 .sidebar-brand::before {
     content: "~/";
-    color: var(--egc-crimson-bright);
+    color: var(--brand-primary);
     font-family: var(--brand-font-display);
     margin-inline-end: .15rem;
 }
 
 .sidebar-brand {
     font-family: var(--brand-font-display);
+}
+
+/* own.css wrote three values for a dark rail straight into its rules, with
+   !important, so on a white one they turn into white on white: the brand
+   name, the active item, and a border nobody can see. Only these three push
+   back with !important of their own; everything else above goes through the
+   variables own.css was written against. */
+.sidebar-brand {
+    color: var(--brand-heading) !important;
+    border-bottom-color: var(--brand-border);
+}
+
+.sidebar-item.active > .sidebar-link,
+.sidebar-link.active {
+    color: var(--brand-primary) !important;
+    font-weight: 600 !important;
+}
+
+.sidebar {
+    border-right: 1px solid var(--brand-border) !important;
 }

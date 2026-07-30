@@ -262,21 +262,26 @@ body.cms-public {
     }
 }
 
-/* ── Code: an editor pane, not a grey box ───────────────────────────────── */
-.cms-public .site-main pre {
+/* ── Code ───────────────────────────────────────────────────────────────────
+   The panel, its palette and its chrome are the theme's now, so a code block
+   follows the reader's colour scheme instead of being a dark slab in the
+   middle of a light page. This skin keeps the crimson edge that makes the
+   block read as an editor pane, and the mono face, and leaves the colours
+   alone.
+
+   It used to be dark in both schemes on the argument that the terminal
+   identity wanted it. A reader who set their system to light and got a
+   near-black rectangle mid-paragraph was being handed the identity at the
+   cost of their own setting, which is the wrong way round. */
+.cms-public .site-main .code-block {
     max-width: 100%;
-    margin: 1.6rem 0;
-    padding: 1rem 1.15rem;
-    background: var(--egc-code-bg);
-    color: #e3e6eb;
-    border: 1px solid #0e1014;
     border-left: 3px solid var(--egc-crimson-bright);
     border-radius: 0 var(--brand-radius) var(--brand-radius) 0;
-    overflow-x: auto;
+}
+.cms-public .site-main .code-block pre {
     font-family: var(--egc-font-mono);
     font-size: .875rem;
     line-height: 1.62;
-    tab-size: 4;
 }
 .cms-public .site-main pre code {
     font: inherit;
@@ -406,10 +411,10 @@ body.cms-public {
 @media (prefers-color-scheme: dark) {
     .cms-public .card { background: var(--brand-surface); }
     .cms-public .card:hover { box-shadow: 0 2px 12px rgba(0, 0, 0, .45); }
-    /* The editor pane is nearly the page colour here, so it needs an outline
-       to stay a pane. The crimson edge is restated because border-color
+    /* The panel is nearly the page colour here, so it needs an outline to
+       stay a panel. The crimson edge is restated because border-color
        would otherwise paint over it. */
-    .cms-public .site-main pre {
+    .cms-public .site-main .code-block {
         border-color: #2f333b;
         border-left-color: var(--egc-crimson-bright);
     }
@@ -432,7 +437,7 @@ body.cms-public {
     .cms-public .site-nav { display: none; }
     .cms-public .site-main p:not([class]),
     .cms-public .site-main :is(ul, ol):not([class]) { max-width: none; }
-    .cms-public .site-main pre {
+    .cms-public .site-main .code-block {
         background: #ffffff;
         color: #000000;
         border: 1px solid #999999;

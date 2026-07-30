@@ -6,19 +6,19 @@
 # built package, so every production image came up without its theme, its
 # skin and its editor, while development looked fine because that path
 # installs the checkout in place and reads the files off disk.
-recursive-include src/splent_io/splent_feature_skin_egc/assets *.css *.js *.map *.json
-recursive-include src/splent_io/splent_feature_skin_egc/assets *.svg *.png *.jpg *.jpeg *.gif *.webp *.ico
-recursive-include src/splent_io/splent_feature_skin_egc/assets *.woff *.woff2 *.ttf *.eot
+recursive-include src/splent_io/splent_feature_skin_terminal/assets *.css *.js *.map *.json
+recursive-include src/splent_io/splent_feature_skin_terminal/assets *.svg *.png *.jpg *.jpeg *.gif *.webp *.ico
+recursive-include src/splent_io/splent_feature_skin_terminal/assets *.woff *.woff2 *.ttf *.eot
 
 # Build inputs, never shipped.
-prune src/splent_io/splent_feature_skin_egc/assets/node_modules
+prune src/splent_io/splent_feature_skin_terminal/assets/node_modules
 
 # Jinja templates (feature views + hook fragments)
-recursive-include src/splent_io/splent_feature_skin_egc/templates *.html
+recursive-include src/splent_io/splent_feature_skin_terminal/templates *.html
 
 # Alembic migration config and scripts
-recursive-include src/splent_io/splent_feature_skin_egc/migrations *.py *.ini *.mako
+recursive-include src/splent_io/splent_feature_skin_terminal/migrations *.py *.ini *.mako
 
 # Translations. The .mo is what gettext reads at runtime; the .po
 # travels with it so the next translator has something to edit.
-recursive-include src/splent_io/splent_feature_skin_egc/translations *.mo *.po *.pot
+recursive-include src/splent_io/splent_feature_skin_terminal/translations *.mo *.po *.pot

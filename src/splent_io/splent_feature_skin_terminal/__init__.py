@@ -1,6 +1,6 @@
 from splent_framework.blueprints.base_blueprint import create_blueprint
 
-skin_egc_bp = create_blueprint(__name__)
+skin_terminal_bp = create_blueprint(__name__)
 
 # Design tokens for the EGC course wiki. Crimson and charcoal are the two
 # colours of the subject's logo; the mono display face is what puts the site
@@ -38,10 +38,10 @@ def init_feature(app):
     app.config["THEME_TOKENS"] = EGC_TOKENS
     register_asset(
         "css",
-        "skin_egc.assets",
+        "skin_terminal.assets",
         order=200,
         subfolder="css",
-        filename="skin_egc.css",
+        filename="skin_terminal.css",
     )
 
 

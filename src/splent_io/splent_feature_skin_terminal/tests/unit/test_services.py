@@ -1,5 +1,5 @@
 """
-Unit tests for splent_feature_skin_egc.
+Unit tests for splent_feature_skin_terminal.
 
 Unit tests verify individual classes and functions in isolation.
 External dependencies (DB, HTTP, other services) MUST be mocked.
@@ -11,7 +11,7 @@ token is ignored in silence and a missing one falls back to the neutral
 default, so the product renders in a colour nobody chose.
 """
 
-from splent_io.splent_feature_skin_egc import EGC_TOKENS
+from splent_io.splent_feature_skin_terminal import EGC_TOKENS
 from splent_io.splent_feature_theme.tokens import DEFAULT_TOKENS
 
 

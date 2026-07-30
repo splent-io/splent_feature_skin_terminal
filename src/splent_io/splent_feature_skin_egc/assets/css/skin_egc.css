@@ -439,3 +439,20 @@ body.cms-public {
         border-left: 3px solid #9b1130;
     }
 }
+
+/* ── Code highlighting on a dark pane ───────────────────────────────────────
+   The theme's palette is tuned for a pale panel. This skin's code block is an
+   editor pane on near-black, where those colours are too dark to read, so the
+   eight variables are re-pointed at the brighter end of the same hues. The
+   rules themselves stay in the theme: what a skin decides here is the palette,
+   not which token gets which colour. */
+.cms-public {
+    --code-comment: #7c8797;
+    --code-keyword: #ff7bbf;
+    --code-string:  #8ddb8d;
+    --code-number:  #ffb86c;
+    --code-name:    #c9a6ff;
+    --code-builtin: #79c0ff;
+    --code-added:   #8ddb8d;
+    --code-removed: #ff8080;
+}

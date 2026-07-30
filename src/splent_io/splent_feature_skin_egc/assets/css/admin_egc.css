@@ -1,0 +1,102 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   EGC — the back office, in the same colours as the front.
+
+   splent_feature_admin ships a Bootstrap shell that looks the same in every
+   product it is installed in, so a reader who follows "Entrar" from a crimson
+   wiki landed somewhere that did not look like the same site. This makes it
+   look like one, entirely from here: the admin feature is not touched, not
+   subclassed and not aware this file exists.
+
+   ── Why there is not a single !important below ────────────────────────────
+   The product's own.css already styles that shell, and it does so with
+   !important on nearly every declaration, so a stylesheet that tried to
+   restate the rules would lose no matter how late it loaded. It does not
+   need to: own.css is written against a set of --s-* variables and never
+   hardcodes a colour, so re-pointing those variables changes everything it
+   draws, in one place, and keeps every layout decision it already made.
+
+   Overriding a stylesheet by supplying its own variables is also the only
+   version of this that survives own.css being rewritten.
+
+   The values come from the theme tokens this skin sets, so changing the
+   identity in one place still changes the whole product, admin included.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+    /* The chrome: the same near-black terminal the public header uses,
+       rather than the slate this shell ships with. */
+    --s-sidebar-bg: var(--egc-terminal);
+    --s-sidebar-text: var(--egc-terminal-muted);
+    --s-sidebar-text-active: #ffffff;
+    --s-sidebar-active: color-mix(in srgb, var(--brand-primary) 26%, transparent);
+    --s-sidebar-hover: color-mix(in srgb, #ffffff 6%, transparent);
+
+    /* The app colour. Indigo is what the shell ships with and it is the one
+       thing on the page that says "this is a different site". */
+    --s-primary: var(--brand-primary);
+    --s-primary-hover: #7d0d26;
+    --s-primary-soft: color-mix(in srgb, var(--brand-primary) 8%, transparent);
+
+    /* Paper and ink, matched to the public side so the two do not read as
+       two different whites. */
+    --s-bg: var(--brand-surface);
+    --s-surface: var(--brand-bg);
+    --s-surface-hover: var(--brand-surface);
+    --s-border: var(--brand-border);
+    --s-text: var(--brand-text);
+    --s-text-secondary: var(--brand-muted);
+
+    /* Square-ish, like the front. The shell's 10px reads as a consumer app
+       next to a wiki whose corners are 6px. */
+    --s-radius: var(--brand-radius);
+    --s-radius-sm: calc(var(--brand-radius) * .6);
+    --s-radius-lg: calc(var(--brand-radius) * 1.6);
+}
+
+/* Bootstrap 5.3 draws each button from component-scoped variables rather
+   than from --bs-primary, so the app colour above does not reach them on its
+   own. Named here one by one, which is also what keeps the hover and the
+   focus ring in step with the fill. */
+.btn-primary {
+    --bs-btn-bg: var(--brand-primary);
+    --bs-btn-border-color: var(--brand-primary);
+    --bs-btn-hover-bg: #7d0d26;
+    --bs-btn-hover-border-color: #7d0d26;
+    --bs-btn-active-bg: #6b0b20;
+    --bs-btn-active-border-color: #6b0b20;
+    --bs-btn-disabled-bg: var(--brand-primary);
+    --bs-btn-disabled-border-color: var(--brand-primary);
+    --bs-btn-focus-shadow-rgb: 155, 17, 48;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--brand-primary);
+    --bs-btn-border-color: var(--brand-primary);
+    --bs-btn-hover-bg: var(--brand-primary);
+    --bs-btn-hover-border-color: var(--brand-primary);
+    --bs-btn-active-bg: var(--brand-primary);
+    --bs-btn-active-border-color: var(--brand-primary);
+    --bs-btn-focus-shadow-rgb: 155, 17, 48;
+}
+
+/* Links and form focus, which Bootstrap keeps outside the button variables. */
+:root {
+    --bs-link-color: var(--brand-primary);
+    --bs-link-color-rgb: 155, 17, 48;
+    --bs-link-hover-color: #7d0d26;
+    --bs-focus-ring-color: color-mix(in srgb, var(--brand-primary) 25%, transparent);
+}
+
+/* The "~/" that marks the site name as a shell prompt on the public header,
+   so the two brands read as one. Written here because the markup belongs to
+   the admin feature. */
+.sidebar-brand::before {
+    content: "~/";
+    color: var(--egc-crimson-bright);
+    font-family: var(--brand-font-display);
+    margin-inline-end: .15rem;
+}
+
+.sidebar-brand {
+    font-family: var(--brand-font-display);
+}
